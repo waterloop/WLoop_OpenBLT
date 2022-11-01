@@ -81,6 +81,9 @@ OD = $(TOOL_PATH)arm-none-eabi-objdump
 AS = $(TOOL_PATH)arm-none-eabi-gcc
 SZ = $(TOOL_PATH)arm-none-eabi-size
 
+HEX = $(OC) -O ihex
+BIN = $(OC) -O binary -S
+
 
 #|--------------------------------------------------------------------------------------|
 #| Filter project files
@@ -142,6 +145,10 @@ all: $(BIN_PATH)/$(PROJ_NAME).srec
 $(BIN_PATH)/$(PROJ_NAME).srec : $(BIN_PATH)/$(PROJ_NAME).elf | build_dirs
 	@$(OC) $< $(OFLAGS) $@
 	@$(OD) $(ODFLAGS) $< > $(BIN_PATH)/$(PROJ_NAME).map
+
+	@$(HEX) $(BIN_PATH)/$(PROJ_NAME).elf $(BIN_PATH)/$(PROJ_NAME).hex
+	@$(BIN) $(BIN_PATH)/$(PROJ_NAME).elf $(BIN_PATH)/$(PROJ_NAME).bin
+
 	@echo +++ Summary of memory consumption:
 	@$(SZ) $(SZFLAGS) $<
 	@echo +++ Build complete [$(notdir $@)]
@@ -166,6 +173,11 @@ $(COBJS): %.o: %.c $(OBJ_PATH)/%.d | build_dirs
 #|--------------------------------------------------------------------------------------|
 #| Make CLEAN                                                                           |
 #|--------------------------------------------------------------------------------------|
+.PHONY: build_dirs
+build_dirs:
+	mkdir -p $(BIN_PATH)
+	mkdir -p $(OBJ_PATH)
+
 .PHONY: clean
 clean: 
 	rm -rf $(OBJ_PATH)
@@ -180,11 +192,11 @@ clean:
 # 	@$(RM) $(RMFLAGS) $(BIN_PATH)/$(PROJ_NAME).srec
 # 	@echo +++ Clean complete
 
+.PHONY: flash
+flash:
+	st-flash write $(BIN_PATH)/$(PROJ_NAME).bin 0x08000000
+	st-flash reset
 
-.PHONY: build_dirs
-build_dirs:
-	mkdir -p $(BIN_PATH)
-	mkdir -p $(OBJ_PATH)
 
 #|--------------------------------------------------------------------------------------|
 #| Dependency generation                                                                |
