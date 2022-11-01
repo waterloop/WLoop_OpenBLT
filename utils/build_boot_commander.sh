@@ -4,6 +4,7 @@ THIS_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 cwd=$(pwd)
 
+cd $THIS_DIR
 cd ../openblt/Host/Source/LibOpenBLT/build
 cmake ..
 make
