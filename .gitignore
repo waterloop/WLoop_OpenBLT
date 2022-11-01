@@ -3,3 +3,4 @@ obj/
 build/
 **/compile_commands.json
 .cache/
+BootCommander
