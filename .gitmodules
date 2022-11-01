@@ -1,3 +1,4 @@
 [submodule "openblt"]
 	path = openblt
 	url = https://github.com/feaser/openblt.git
+	ignore = dirty
