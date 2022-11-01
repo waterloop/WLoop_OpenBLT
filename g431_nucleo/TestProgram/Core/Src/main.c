@@ -107,7 +107,7 @@ int main(void)
   {
     /* USER CODE END WHILE */
     GPIOB->ODR ^= (1 << 8);
-    HAL_Delay(200);
+    HAL_Delay(500);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
