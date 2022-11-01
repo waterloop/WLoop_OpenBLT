@@ -175,8 +175,8 @@ $(COBJS): %.o: %.c $(OBJ_PATH)/%.d | build_dirs
 #|--------------------------------------------------------------------------------------|
 .PHONY: build_dirs
 build_dirs:
-	mkdir -p $(BIN_PATH)
-	mkdir -p $(OBJ_PATH)
+	@mkdir -p $(BIN_PATH)
+	@mkdir -p $(OBJ_PATH)
 
 .PHONY: clean
 clean: 
@@ -196,6 +196,10 @@ clean:
 flash:
 	st-flash write $(BIN_PATH)/$(PROJ_NAME).bin 0x08000000
 	st-flash reset
+
+.PHONY: openocd
+openocd:
+	openocd -f interface/stlink-v2.cfg -f target/stm32g4x.cfg -c "init"
 
 
 #|--------------------------------------------------------------------------------------|

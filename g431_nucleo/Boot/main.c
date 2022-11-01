@@ -29,6 +29,7 @@
 /****************************************************************************************
 * Include files
 ****************************************************************************************/
+// #include "led.h"
 #include "boot.h"                                /* bootloader generic header          */
 #include "stm32g4xx.h"                           /* STM32 CPU and HAL header           */
 #include "stm32g4xx_ll_pwr.h"                    /* STM32 LL PWR header                */
